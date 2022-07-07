@@ -6,7 +6,7 @@ Dynamic simulation of a simplified rail vehicle rolling on a railway track. The 
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
-	- [Generator](#generator)
+	- [Examples](#examples)
 - [Related Efforts](#related-efforts)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
@@ -15,6 +15,7 @@ Dynamic simulation of a simplified rail vehicle rolling on a railway track. The 
 ## Background
 
 ![Vehicle-Track FE Model](figs/VehicleTrackFEModel.png)
+This model can be used to simulate the high frequency dynamics of the vertical vehicle-rail interaction.
 
 ## Model Description
 
@@ -22,20 +23,35 @@ The model is composed of several substructure components:
 - Vehicle assembly (i.e. from Simpack),
 - Track assembly (2D FE Model of Beam: 4DOF Timoshenko elements),
 - Non-linear Hertzian contact spring:  
-$$f_c = \left\{\begin{matrix}
-		K_H\delta^{1.5},\; \delta>0 \\ 
-		0,\; \delta\leq0 \\
-		\end{matrix}\right.$$
+
+$$f_c = \left\{\begin{matrix}K_H\delta^{1.5},\; \delta>0 \\ 0,\; \delta\leq0 \\\end{matrix}\right.$$
 
 ## System Equations and State Space representation:
 The equilibrium matrices of the system are formulated as: 
 $$M_{sys}\ddot{q}_{sys}+C_{sys}\dot{q}_{sys}+[K_{sys}-K_c\delta^{0.5}E]q_{sys}=f_{irr}+f_{ext}$$
+
 Local dynamics, modal superposition:
-$$\ddot{\eta}_i+2\zeta_i\omega_i\dot{\eta}_i+\omega_i^2\eta_i+M_{cross}\ddot{q}_{tr}=f_i$$
+$$\ddot{\eta}_{i}+2\zeta_{i}\omega_{i}\dot{\eta}_{i}+\omega_{i}^2\eta_{i}+M_{cross}\ddot{q}_{tr}=f_{i}$$
+
 
 ## Install
 
+The following steps provide guidance on how to install railFE:
+
+1. Install Python, required Python packages, and get the railFE source code from GitHub
+2. Install railFE
+
+Once you have installed the aforementioned tools follow these steps to build and install railFE:
+
+* Open a Terminal (Linux/macOS) or Command Prompt (Windows), navigate into the top-level railFE directory and activate your environment of choice. Run the following command:
+
+    (railFE)$ python setup.py install
+
+**You are now ready to proceed to running railFE.**
+
 ## Usage
+
+### Examples
 
 ## Maintainers
 
