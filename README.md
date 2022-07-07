@@ -30,11 +30,15 @@ f_c = \left\{\begin{matrix}K_H\delta^{1.5},\; \delta>0 \\ 0,\; \delta\leq0 \\\en
 
 ## System Equations and State Space representation:
 The equilibrium matrices of the system are formulated as: 
-$$M_{sys}\ddot{q}_{sys}+C_{sys}\dot{q}_{sys}+[K_{sys}-K_c\delta^{0.5}E]q_{sys}=f_{irr}+f_{ext}$$
+
+```math
+M_{sys}\ddot{q}_{sys}+C_{sys}\dot{q}_{sys}+[K_{sys}-K_c\delta^{0.5}E]q_{sys}=f_{irr}+f_{ext}
+```
 
 Local dynamics, modal superposition:
-$$\ddot{\eta}_{i}+2\zeta_{i}\omega_{i}\dot{\eta}_{i}+\omega_{i}^2\eta_{i}+M_{cross}\ddot{q}_{tr}=f_{i}$$
-
+```math
+\ddot{\eta}_{i}+2\zeta_{i}\omega_{i}\dot{\eta}_{i}+\omega_{i}^2\eta_{i}+M_{cross}\ddot{q}_{tr}=f_{i}
+```
 
 ## Install
 
@@ -46,12 +50,14 @@ The following steps provide guidance on how to install railFE:
 Once you have installed the aforementioned tools follow these steps to build and install railFE:
 
 * Open a Terminal (Linux/macOS) or Command Prompt (Windows), navigate into the top-level railFE directory and activate your environment of choice. Run the following command:
-
-    (railFE)$ python setup.py install
+```
+(railFE)$ python setup.py install
+```
 
 **You are now ready to proceed to running railFE.**
 
 ## Usage
+railFE is designed as an extensible Python package.
 
 ### Examples
 
@@ -68,7 +74,6 @@ Feel free to dive in! [Open an issue](https://github.com/CyprienHoelzl/railFE/is
 
 This project exists thanks to all the people who contribute. 
 <a href="https://github.com/CyprienHoelzl/railFE/graphs/contributors"><img src="https://opencollective.com/railFE/contributors.svg?width=890&button=false" /></a>
-
 
 ## License
 
