@@ -24,7 +24,9 @@ The model is composed of several substructure components:
 - Track assembly (2D FE Model of Beam: 4DOF Timoshenko elements),
 - Non-linear Hertzian contact spring:  
 
-$$f_c = \left\{\begin{matrix}K_H\delta^{1.5},\; \delta>0 \\ 0,\; \delta\leq0 \\\end{matrix}\right.$$
+```math
+f_c = \left\{\begin{matrix}K_H\delta^{1.5},\; \delta>0 \\ 0,\; \delta\leq0 \\\end{matrix}\right.
+```
 
 ## System Equations and State Space representation:
 The equilibrium matrices of the system are formulated as: 
