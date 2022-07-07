@@ -6,14 +6,22 @@ MatrixAssemblyOperations
 
 @author: CyprienHoelzl
 """
+import numpy as np
 #%% Matrix Assembly Operations
 def addAtPos(mat1, mat2, xypos):
     """
-    Add two matrices of different sizes in place, offset by xy coordinates
-    Usage:
-      - mat1: base matrix
-      - mat2: add this matrix to mat1
-      - xypos: tuple (x,y) containing coordinates
+    Add two arrays of different sizes in place, offset by xy coordinates
+
+    Parameters
+    ----------
+    mat1 : base array
+    mat2 : secondary array added to mat1
+    xypos : tuple (x,y) containing coordinates
+
+    Returns
+    -------
+    mat1 : array1 + (array2 added at position (x,y) in array1)
+
     """
     x, y = xypos
     ysize, xsize = mat2.shape
@@ -23,16 +31,20 @@ def addAtPos(mat1, mat2, xypos):
 
 def addAtIdx(mat1, mat2, xypos):
     """
-    Add two matrices of different sizes in place, offset by xy coordinates
-    Usage:
-      - mat1: base matrix
-      - mat2: add this matrix to mat1
-      - xypos: tuple ([x,x2,x3...],[y1,y2,y3,..]) containing coordinates in mat1
+    Add two arrays of different sizes in place, offset by xy coordinates
+    
+
+    Parameters
+    ----------
+    mat1 : array1 of size (a,b)
+    mat2 : array2 of size (n,m) to be added to mat1
+    xypos : tuple ([x,x2,x3...xn],[y1,y2,y3,..ym]) containing coordinates in mat1 for elements in mat2
+
+    Returns
+    -------
+    mat1 : summed arrays
+    
     """
     x, y = xypos
     mat1[np.ix_(y, x)] += mat2
     return mat1
-
-    
-def is_odd(self,num):
-    return num & 0x1

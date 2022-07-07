@@ -12,6 +12,7 @@ from MatrixAssemblyOperations import addAtPos, addAtIdx
 #%% Track Components    
 class UIC60properties():
     def __init__(self):
+        # Initialize Rail with UIC60 properties as described in:
         # http://www.railway-research.org/IMG/pdf/319-2.pdf
         self.k = 0.38 # [] UIC 60 < 1500Hz, k=0.38 if >1500Hz
         self.E = 210*10**9 # [Pa] (210GPA)
@@ -25,9 +26,10 @@ class UIC60properties():
         self.K_c0 = 1.028*10**9 #[N/m] Hertzian Spring Stiffness
         self.K_c = 100.0*10**9 #[N/m^1.5] Hertzian Spring coefficient
     def Psi(self,L):
-        # Psi = 12EI/GAkL^2
+        # Defined as: Psi = 12EI/GAkL^2
         return 12*self.E*self.I/(self.G*self.A*self.k*L**2)
     def I_rotated(self):
+        # Inertia defined as:
         angle = np.arcsin(1/20)
         I_xx = self.I_xx
         I_yy = self.I_yy
@@ -39,23 +41,27 @@ class UIC60properties():
         
 class SleeperB70():
     def __init__(self):
+        # Initialization of sleeper parameters for a B70 type sleeper:
         # https://www.railone.de/produkte-loesungen/fern-gueterverkehr/schotteroberbau/betonschwelle-b70
         self.m_s_half = 140 #kg
         self.m_s = 280 #kg
         self.I = np.infty # Sleeper elasticity neglected
 class SleeperB90():
     def __init__(self):
+        # Initialization of sleeper parameters for a B90 type sleeper:
         # https://www.railone.de/produkte-loesungen/fern-gueterverkehr/schotteroberbau/betonschwelle-b70
         self.m_s_half = 177.5# 140 #kg
         self.m_s = 355 #kg
         self.I = np.infty # Sleeper elasticity neglected
 class Ballast():
     def __init__(self,K=40*10**6,C=47*10**3):
+        # Initialization of ballast parameters
         self.K_b = K # [N/m] Ballast Stiffness
         # self.K_b = 1/(1/(70*10**6)+1/(207*1000*250)) # USP http://www.trackelast.com/usp7ms2025.html
         self.C_b = C # [Ns/m] Ballast Damping
 class Pad():
     def __init__(self,K =  200*10**6, C=28*10**3):#48*10**3):
+        # Initialization of pad parameters
         self.K_p =K # [N/m] Pad Stiffness
         self.C_p =C # [Ns/m] Pad Damping
     def distributed_params(self,L_s):
@@ -65,7 +71,14 @@ class Pad():
 class TrackAssembly():
     def __init__(self,support_type = 'eb', n_sleepers = 81,sleeper_spacing = 0.6,support_length = 0.16,**kwargs):
         """
-
+        Initialize with the default track assembly
+        
+        -----------------   rail
+          p    p    p       pad
+          s    s    s       sleeper
+          b    b    b       ballast
+          
+          
         Parameters
         ----------
         support_type : 'pt' point support or 'eb' elastic base. The default is 'pt'.

@@ -8,6 +8,7 @@ Matrix Assembly of System
 """
 import numpy as np
 import scipy
+import control
 from VehicleModelAssembly import VehicleAssembly
 from TrackModelAssembly import TrackAssembly   
 from MatrixAssemblyOperations import addAtPos, addAtIdx 
@@ -68,7 +69,7 @@ class LocalAssembly():
         timelM = self.OverallSystem.Track.Timoshenko4eb.M_loc_dyn()
         timelK = self.OverallSystem.Track.Timoshenko4eb.K_loc_dyn()
         timelC = self.OverallSystem.Track.Timoshenko4eb.C_loc_dyn()
-        print('Warning: start and end on rail!!')
+        
         # Base 3 element assembly TIM4el (5nodes) + left/right TIM4 (2*2nodes)    
         M_cross3elems = addAtIdx(addAtPos(addAtPos(np.zeros((n_el_p_bay+2,n_nodes*no_modes)),timMcross,(0,0)),
                                           timelMcross,(no_modes,2)),
@@ -272,7 +273,7 @@ class OverallSystem():
     
     # K_loc*w_loc = f_c
     def __init__(self,support_type, n_sleepers= 81,modal_analysis = True,**kwargs):
-        print('to do> Local assembly, Overall system and mass application from vehicle, herzian stiffness')
+        #print('to do> Local assembly, Overall system and mass application from vehicle, herzian stiffness')
         self.support_type = support_type
         self.n_sleepers = n_sleepers
         self.modal_analysis = modal_analysis
@@ -459,4 +460,4 @@ class OverallSystem():
         
 if __name__ == "__main__":        
     xi = 0.5
-    OverallSyst = OverallSystem(xi)  
+    OverallSyst = OverallSystem('eb')  
