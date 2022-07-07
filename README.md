@@ -61,6 +61,12 @@ railFE is designed as an extensible Python package.
 
 ### Examples
 
+The folder railFE/examples contains several usage examples of the 
+1. Evaluation of the frequency response of the track (selected observed degrees of freedom) under a point load applied at a fixed location on the Finite Element model.  
+2. Simulation of dynamic response of the system with gaussian track noise. 
+3. Simulation of dynamic response when crossing a geometric irregularity on the rail (impulse like excitation).
+4. Analytic solution of the timoshenko beam shape functions: TimoshenkoBeam_AnalyticShapeFunctions.py
+
 ## Maintainers
 
 [@CyprienHoelzl](https://github.com/CyprienHoelzl/).
