@@ -7,24 +7,18 @@ Simplified Vehicle-Track interaction model
 """
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy import sparse
-from scipy.linalg import pascal
-from scipy.sparse import linalg
-import scipy.integrate as integrate
+# from scipy import sparse
+# from scipy.linalg import pascal
+# from scipy.sparse import linalg
+# import scipy.integrate as integrate
 import scipy
 
 # module imports
-from VehicleModelAssembly import VehicleAssembly
-from TrackModelAssembly import UIC60properties,Pad
-from TimoshenkoBeamModel import Timoshenko4,Timoshenko4eb
-from SystemAssembly import OverallSystem
-
-#%% Unit conversions
-def P2R(radii, angles):
-    return radii * np.exp(1j*angles)
-
-def R2P(x):
-    return np.abs(x), np.angle(x)
+from railFE.VehicleModelAssembly import VehicleAssembly
+from railFE.TrackModelAssembly import UIC60properties,Pad
+from railFE.TimoshenkoBeamModel import Timoshenko4,Timoshenko4eb
+from railFE.SystemAssembly import OverallSystem
+from railFE.UnitConversions import P2R, R2P
 
 #%% Plotting       
 def plot_shapefunctions():
@@ -62,7 +56,7 @@ def plot_comparison():
     for i in np.arange(200,1200,200):
         UIC60props = UIC60properties()
         tim4 = Timoshenko4(UIC60props,0.5)
-        tim4el = Timoshenko4eb(UIC60props,Pad(K_p=i*10**6),0.5)
+        tim4el = Timoshenko4eb(UIC60props,Pad(K = i*10**6),0.5)
         ax[0].plot(-tim4el.N_w1(np.arange(0,1.1,0.1))+tim4.N_w1(np.arange(0,1.1,0.1)),label = '${} [MN/m^2]$'.format(str(i)))#r'$N_{w1}(\xi)$')
         ax[1].plot(-tim4el.N_w2(np.arange(0,1.1,0.1))+tim4.N_w2(np.arange(0,1.1,0.1)),label = '${} [MN/m^2]$'.format(str(i)))#r'$N_{w2}(\xi)$')
         ax[0].legend()
@@ -84,7 +78,7 @@ def plot_sleeperstiffnessNs():
     # fig.suptitle('TIM4 difference for distributed stiffness')
     for i in Y:
         UIC60props = UIC60properties()
-        tim4el = Timoshenko4eb(UIC60props,Pad(K_p=i*10**6),0.5)
+        tim4el = Timoshenko4eb(UIC60props,Pad(K=i*10**6),0.5)
         Z.append(tim4el.N_s(X))
     Z = np.vstack(Z)
     # Plot the surface.

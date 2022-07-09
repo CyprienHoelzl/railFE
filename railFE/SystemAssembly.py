@@ -9,9 +9,9 @@ Matrix Assembly of System
 import numpy as np
 import scipy
 import control
-from VehicleModelAssembly import VehicleAssembly
-from TrackModelAssembly import TrackAssembly   
-from MatrixAssemblyOperations import addAtPos, addAtIdx 
+from railFE.VehicleModelAssembly import VehicleAssembly
+from railFE.TrackModelAssembly import TrackAssembly   
+from railFE.MatrixAssemblyOperations import addAtPos, addAtIdx 
 #%% Local System Assembly
 class LocalAssembly():
     def __init__(self, OverallSystem,modal_analysis = True, modal_bays = 5):

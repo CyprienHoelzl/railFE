@@ -54,6 +54,8 @@ if sys.version_info[:2] < (3, 4):
 
 extensions = []
 
+print(packages)
+
  # SetupTools Required to make package
 import setuptools
 
