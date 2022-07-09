@@ -20,7 +20,7 @@ This model can be used to simulate the high frequency dynamics of the vertical v
 ## Model Description
 
 The model is composed of several substructure components:
-- Vehicle assembly (i.e. from Simpack),
+- Vehicle assembly or properties (i.e. from Simpack),
 - Track assembly (2D FE Model of Beam: 4DOF Timoshenko elements),
 - Non-linear Hertzian contact spring:  
 
@@ -62,15 +62,14 @@ railFE is designed as an extensible Python package.
 ### Examples
 
 The folder railFE/examples contains several usage examples of the 
-1. Evaluation of the frequency response of the track (selected observed degrees of freedom) under a point load applied at a fixed location on the Finite Element model.  
-2. Simulation of dynamic response of the system with gaussian track noise. 
-3. Simulation of dynamic response when crossing a geometric irregularity on the rail (impulse like excitation).
-4. Analytic solution of the timoshenko beam shape functions: TimoshenkoBeam_AnalyticShapeFunctions.py
+1. [Example 1](TrackFrequencyResponseEvaluation.py): Evaluation of the frequency response of the track (selected observed degrees of freedom) under a point load applied at a fixed location on the Finite Element model.  
+2. [Example 2 to do](to_do): Simulation of dynamic response of the system with gaussian track noise. 
+3. [Example 3](AnalysisSimplifiedVTIM.py): Simulation of dynamic response when crossing a geometric irregularity on the rail (impulse like excitation).
+4. [Example 4](TimoshenkoBeam_AnalyticShapeFunctions.py) Analytic solution of the timoshenko beam shape functions: TimoshenkoBeam_AnalyticShapeFunctions.py
 
 ## Maintainers
 
 [@CyprienHoelzl](https://github.com/CyprienHoelzl/).
-
 
 ## Contributing
 
