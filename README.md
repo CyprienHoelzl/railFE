@@ -65,12 +65,12 @@ railFE is designed as an extensible Python package.
 ### Examples
 
 The folder railFE/examples contains several usage cases of the package:
-1. [Example 0](examples/timoshenkoBeamElements_plotting.py): Plotting the shape function for 4DOF Timoshenko elements without and with elastic bedding.
-1. [Example 1](examples/TrackFrequencyResponseEvaluation.py): Evaluation of the frequency response of the track (selected observed degrees of freedom) under a point load applied at a fixed location on the Finite Element model.  
-2. [Example 2 to do](examples/to_do): Simulation of dynamic response of the system with gaussian track noise. 
-3. [Example 3](examples/timeintegration_default_track_impulse.py): Simulation of dynamic response when crossing a geometric irregularity on the rail (impulse like excitation and gaussian noise).
-3. [Example 4](examples/timeintegration_varyingtrackparams_impulse.py): Simulation of dynamic response when crossing a geometric irregularity on the rail with different track parameters and speeds  (impulse like excitation and gaussian noise).
-4. [Example 5](examples/TimoshenkoBeam_AnalyticShapeFunctions.py): Analytic solution of the timoshenko beam shape functions: TimoshenkoBeam_AnalyticShapeFunctions.py
+1. [Example 1](examples/timoshenkoBeamElements_plotting.py): Plotting the shape function for 4DOF Timoshenko elements without and with elastic bedding.
+2. [Example 2](examples/TrackFrequencyResponseEvaluation.py): Evaluation of the frequency response of the track (selected observed degrees of freedom) under a point load applied at a fixed location on the Finite Element model.  
+3. [Example 3 to do](examples/to_do): Simulation of dynamic response of the system with gaussian track noise. 
+4. [Example 4](examples/timeintegration_default_track_impulse.py): Simulation of dynamic response when crossing a geometric irregularity on the rail (impulse like excitation and gaussian noise).
+5. [Example 5](examples/timeintegration_varyingtrackparams_impulse.py): Simulation of dynamic response when crossing a geometric irregularity on the rail with different track parameters and speeds  (impulse like excitation and gaussian noise).
+6. [Example 6](examples/TimoshenkoBeam_AnalyticShapeFunctions.py): Analytic solution of the timoshenko beam shape functions: TimoshenkoBeam_AnalyticShapeFunctions.py
 
 ## Maintainers
 
