@@ -45,7 +45,8 @@ f_c = \left\{\begin{matrix}K_H\delta^{1.5},\; \delta>0 \\ 0,\; \delta\leq0 \\\en
 
 Test :math:`f_c = \\left\\{\\begin{matrix}K_H\\delta^{1.5},\\; \\delta>0 \\\\ 0,\\; \\delta\\leq0 \\\\\\end{matrix}\\right`
 
-:math:`f_c = \left\{\begin{matrix}K_H\delta^{1.5},\; \delta>0 \\ 0,\; \delta\leq0 \\\end{matrix}\right.`. 
+Test2 :math:`f_c = \left\{\begin{matrix}K_H\delta^{1.5},\; \delta>0 \\ 0,\; \delta\leq0 \\\end{matrix}\right.`. 
+
 ==========================================================
 System Equations and State Space representation:
 ==========================================================
