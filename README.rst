@@ -39,6 +39,7 @@ The model is composed of several substructure components:
 - Non-linear Hertzian contact spring:  
 
 .. math::
+
 f_c = \left\{\begin{matrix}K_H\delta^{1.5},\; \delta>0 \\ 0,\; \delta\leq0 \\\end{matrix}\right.
 
 
@@ -49,12 +50,14 @@ System Equations and State Space representation:
 The equilibrium matrices of the system are formulated as: 
 
 .. math::
+
 M_{sys}\ddot{q}_{sys}+C_{sys}\dot{q}_{sys}+[K_{sys}-K_c\delta^{0.5}E]q_{sys}=f_{irr}+f_{ext}
 
 
 Local dynamics, modal superposition:
 
 .. math::
+
 \ddot{\eta}_{i}+2\zeta_{i}\omega_{i}\dot{\eta}_{i}+\omega_{i}^2\eta_{i}+M_{cross}\ddot{q}_{tr}=f_{i}
 
 
@@ -72,6 +75,7 @@ Once you have installed the aforementioned tools follow these steps to build and
 * Open a Terminal (Linux/macOS) or Command Prompt (Windows), navigate into the top-level railFE directory and activate your environment of choice. Run the following command:
 
 .. code-block:: bash
+
 	(railFE)$ python setup.py install
 
 **You are now ready to proceed to running railFE.**
@@ -87,6 +91,7 @@ Examples
 ----------------------------------------------------------
 
 The folder railFE/examples contains several usage cases of the package:
+
 1. `Example 1 <examples/timoshenkoBeamElements_plotting.py>`_: Plotting the shape function for 4DOF Timoshenko elements without and with elastic bedding.
 2. `Example 2 <examples/TrackFrequencyResponseEvaluation.py>`_: Evaluation of the frequency response of the track (selected observed degrees of freedom) under a point load applied at a fixed location on the Finite Element model.  
 3. `Example 3 to do <examples/to_do>`_: Simulation of dynamic response of the system with gaussian track noise. 
@@ -116,4 +121,4 @@ This project exists thanks to all the people who contribute.
 License
 ==========================================================
 
-[MIT](LICENSE) © Cyprien Hoelzl
+`MIT <LICENSE>`_ © Cyprien Hoelzl
