@@ -66,7 +66,6 @@ if vary_ballast_params_nm:
     fig.tight_layout()  
     fig.subplots_adjust(right=0.65,wspace=0.25)   
     fig.savefig('../figs/timeintegration_varyingtrackparams_impulse/NM_comparison_point_distributed_support_ballast_variation.pdf')
-    fig.savefig('../figs/timeintegration_varyingtrackparams_impulse/NM_comparison_point_distributed_support_ballast_variation.png')
  
 #%% Response for varying track parameters and speed NM
 t_integration = {}
@@ -113,7 +112,6 @@ fig.legend(loc=7,title='Ballast Parameters')
 fig.tight_layout()  
 fig.subplots_adjust(right=0.65,wspace=0.25)   
 fig.savefig('../figs/timeintegration_varyingtrackparams_impulse/NM_comparison_point_distributed_support_ballast_variation_speed.pdf')
-fig.savefig('../figs/timeintegration_varyingtrackparams_impulse/NM_comparison_point_distributed_support_ballast_variation_speed.png')
 
 sys.exit()
 #%% Additional Plots
@@ -162,4 +160,3 @@ ax.set_xlim([8,12])
 ax.legend()
 fig.tight_layout()
 fig.savefig('../figs/timeintegration_varyingtrackparams_impulse/timeintegration.pdf')
-fig.savefig('../figs/timeintegration_varyingtrackparams_impulse/timeintegration.png')

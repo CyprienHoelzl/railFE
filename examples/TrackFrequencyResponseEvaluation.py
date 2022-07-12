@@ -59,7 +59,7 @@ ax[0].set_ylabel('Amplitude [m/N]', color='b')
 
 ax[0].legend()
 fig.tight_layout()
-fig.savefig('../figs/trackFrequencyResponseEvaluation/FrequencyResponse_point_distributed_support.png',dpi=300)
+fig.savefig('../figs/trackFrequencyResponseEvaluation/FrequencyResponse_point_distributed_support.pdf')
 
 #%% Calculate Frequency response for varying track parameters:
 output_fr = {}
@@ -246,6 +246,6 @@ for loading in [0,1]: # 0:midspan between sleepers, 1:over sleeper
     fig.align_ylabels()
     
     if loading==0:
-        fig.savefig('../figs/trackFrequencyResponseEvaluation/mode_shapes_load_midspan.png',dpi=300)
+        fig.savefig('../figs/trackFrequencyResponseEvaluation/mode_shapes_load_midspan.pdf')
     else:
-        fig.savefig('../figs/trackFrequencyResponseEvaluation/mode_shapes_load_oversleeper.png',dpi=300)
+        fig.savefig('../figs/trackFrequencyResponseEvaluation/mode_shapes_load_oversleeper.pdf')

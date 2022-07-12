@@ -59,10 +59,10 @@ ax[2].scatter([0.3+i*0.6 for i in range(int(time_integration.speed*time_integrat
 fig.align_ylabels()
 fig.align_ylabels()
 fig.tight_layout()
-fig.savefig('../figs/timeintegration_default_track_impulse/time_integration_timeseries_axle.png', dpi =300)
+fig.savefig('../figs/timeintegration_default_track_impulse/time_integration_timeseries_axle.pdf')
 
 fig.axes[0].set_xlim(4,6)
-fig.savefig('../figs/timeintegration_default_track_impulse/time_integration_timeseries_axle_Zoomed.png', dpi =300)
+fig.savefig('../figs/timeintegration_default_track_impulse/time_integration_timeseries_axle_Zoomed.pdf')
 
 #%%% UVA for Bogie
 fig,ax = plt.subplots(nrows = 3,sharex = True)
@@ -84,7 +84,7 @@ ax[2].scatter([0.3+i*0.6 for i in range(int(time_integration.speed*time_integrat
                                marker = 's', color='k',s=15)
 fig.align_ylabels()
 fig.tight_layout()
-fig.savefig('../figs/timeintegration_default_track_impulse/time_integration_timeseries_bogie.png', dpi =300)
+fig.savefig('../figs/timeintegration_default_track_impulse/time_integration_timeseries_bogie.pdf')
 
 #%%% UVA for Body
 fig,ax = plt.subplots(nrows = 3,sharex = True)
@@ -103,7 +103,7 @@ ax[2].scatter([0.3+i*0.6 for i in range(int(time_integration.speed*time_integrat
                                marker = 's', color='k',s=15)
 fig.align_ylabels()
 fig.tight_layout()
-fig.savefig('../figs/timeintegration_default_track_impulse/time_integration_timeseries_body.png', dpi =300)
+fig.savefig('../figs/timeintegration_default_track_impulse/time_integration_timeseries_body.pdf')
 
        
 #%%% Plot w DOFs on rails and sleeper
@@ -134,7 +134,7 @@ ax[0].scatter([0.3+i*0.6 for i in range(int(time_integration.speed*time_integrat
 ax[0].set_xlim(4,6)
 fig.align_ylabels()
 fig.tight_layout()
-fig.savefig('../figs/timeintegration_default_track_impulse/time_integration_timeseries_railSleeper.png', dpi =300)
+fig.savefig('../figs/timeintegration_default_track_impulse/time_integration_timeseries_railSleeper.pdf')
 
 #%%% Plot t DOFs on rail and sleeper
 fig,ax = plt.subplots(nrows = 3,figsize= (8,5),sharex = True)
@@ -165,7 +165,7 @@ ax[0].legend(ncol=2)
 ax[0].set_xlim(4,6)
 fig.align_ylabels()
 fig.tight_layout()
-fig.savefig('../figs/timeintegration_default_track_impulse/time_integration_timeseries_rail.png', dpi =300)
+fig.savefig('../figs/timeintegration_default_track_impulse/time_integration_timeseries_rail.pdf')
 
 # =============================================================================
 # #%% Plot rail vibration modes

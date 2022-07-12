@@ -125,10 +125,10 @@ def plot_sleeperstiffnessNs():
 #%% Application
 if __name__ == "__main__":
     fig,ax = plot_shapefunctions()
-    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_Timoshenko4.png',dpi=300)
+    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_Timoshenko4.pdf')
     fig,ax = plot_shapefunctions_el()
-    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_Timoshenko4_elasticbedding.png',dpi=300)
+    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_Timoshenko4_elasticbedding.pdf')
     fig,ax = plot_comparison()
-    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_comparison_Timoshenko4_elasticbedding.png',dpi=300)
+    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_comparison_Timoshenko4_elasticbedding.pdf')
     fig,ax = plot_sleeperstiffnessNs()
-    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_sleeper_stiffness_sleeperdisplacement.png',dpi=300)
+    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_sleeper_stiffness_sleeperdisplacement.pdf')
