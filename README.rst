@@ -36,13 +36,16 @@ Model Description
 The model is composed of several substructure components:
 - Vehicle assembly or properties (i.e. from Simpack),
 - Track assembly (2D FE Model of Beam: 4DOF Timoshenko elements),
-- Non-linear Hertzian contact spring:  :math:`a^2 + b^2 = c^2`
+- Non-linear Hertzian contact spring:
 
 .. math::
 
 f_c = \left\{\begin{matrix}K_H\delta^{1.5},\; \delta>0 \\ 0,\; \delta\leq0 \\\end{matrix}\right.
 
 
+Test :math:`f_c = \\left\\{\\begin{matrix}K_H\\delta^{1.5},\\; \\delta>0 \\\\ 0,\\; \\delta\\leq0 \\\\\\end{matrix}\\right`
+
+:math:`f_c = \left\{\begin{matrix}K_H\delta^{1.5},\; \delta>0 \\ 0,\; \delta\leq0 \\\end{matrix}\right.`. 
 ==========================================================
 System Equations and State Space representation:
 ==========================================================
