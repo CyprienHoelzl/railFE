@@ -3,7 +3,7 @@
 Created on Wed Feb 19 16:21:46 2020
 
 # Analytic Rail beam formulation
-  For the rail formulation a timoshenko 4 beam
+For the rail formulation using a timoshenko 4 beam
 
 @author: CyprienHoelzl
 """

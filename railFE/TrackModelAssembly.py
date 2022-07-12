@@ -7,8 +7,8 @@ Track Model assembly
 @author: CyprienHoelzl
 """
 import numpy as np
-from TimoshenkoBeamModel import Timoshenko4,Timoshenko4eb
-from MatrixAssemblyOperations import addAtPos, addAtIdx
+from railFE.TimoshenkoBeamModel import Timoshenko4,Timoshenko4eb
+from railFE.MatrixAssemblyOperations import addAtPos, addAtIdx
 #%% Track Components    
 class UIC60properties():
     def __init__(self):

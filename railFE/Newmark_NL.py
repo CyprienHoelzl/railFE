@@ -167,216 +167,77 @@ def newmark_nl(MODEL):
         #     plt.plot(x,u[[i for i,j in enumerate(MODEL.OverallSystem.u_names) if 'w_rail' in j]],'r.')
         #     iii=0
     return MODEL
-#%% Trash
-            # kc = MODEL.OverallSystem.Track.Timoshenko4.railproperties.K_c
-            # delta_u_rw = np.dot(E[:-1,0],Yi[idx0])
-            # if delta_u_rw>=0:
-            #     K_Hi0 = np.sort(np.roots((alpha,1,0,-kc**2*delta_u_rw)))[-1]
-            #     # where delta_u_rw = u_w - N_i*u_i
-            #     print(K_Hi0)
-            # else:
-            #     K_Hi0 = 0
-            # K_H = K_Hi0/(1+ alpha*K_Hi0) # Linearized contact stiffness
-            #P_i0 = K_H * MODEL.OverallSystem.Local.E[0,:]
-            #print('select root')
-            #MODEL.Kci = MODEL.OverallSystem.Local.E*K_H
-# def assemble_nl( MODEL ):
-    
-#     ndof = 6*numel(MODEL.nodes[:,0]);
-    
-#     nt = MODEL.nt;
-#     MODEL.K = scipy.sparse.csc_matrix(ndof,ndof);
-#     MODEL.M = sparse(ndof,ndof);
-#     MODEL.fint = np.zeros((ndof,1));
-#     MODEL.f = np.zeros((ndof,1));
-    
-#     if (isfield(MODEL,'u')==0)
-#         MODEL.u = np.zeros((ndof,1));
-#     end
-    
-#     % Assembly of the beam elements
-    
-#     n_beams =size(MODEL.beam_elements,1);
-    
-#     for e=1:n_beams
-#         beam_type = MODEL.beam_elements(e,1);
-#         beam_nodes = MODEL.beam_elements(e,2:end);
-#         beam_COORDS = MODEL.nodes(beam_nodes,:);
-#         beam_material_properties = MODEL.material_properties(MODEL.beam_material_properties(e),:);
-#         beam_cross_section_properties = MODEL.cross_sections(MODEL.beam_cross_sections(e,:),:);
-#         beam_loads = MODEL.beam_loads(e,:);
-        
-#         [ beam_dofs ] = element_global_dofs( beam_nodes );
-#         [Ke,Me,fe] = beam_mass_stiffness_rhs(beam_type, beam_COORDS, beam_material_properties, beam_cross_section_properties, beam_loads);
-#         ue = MODEL.u(beam_dofs);
-    
-#         MODEL.K(beam_dofs,beam_dofs) = MODEL.K(beam_dofs,beam_dofs) + Ke;
-#         MODEL.M(beam_dofs,beam_dofs) = MODEL.M(beam_dofs,beam_dofs) + Me;
-#         MODEL.fint(beam_dofs) = MODEL.fint(beam_dofs) + Ke*ue;
-#         MODEL.f(beam_dofs) = MODEL.f(beam_dofs) + fe;
-#     end
-    
-#     # % Assembly of the plate elements
-    
-#     # if (isfield(MODEL,'plate_elements'))
-    
-#     #     n_plates = numel(MODEL.plate_elements[:,0]);
-#     # else
-#     #     n_plates = 0;
-#     # end
-    
-#     # for e=1:n_plates
-#     #     plate_nodes = MODEL.plate_elements(e,1:end);
-#     #     plate_COORDS = MODEL.nodes(plate_nodes,:);
-#     #     plate_material_properties = MODEL.material_properties(MODEL.plate_material_properties(e),:);
-#     #     plate_thickness = MODEL.plate_thickness(e,:);
-#     #     plate_loads = MODEL.plate_loads(e,:);
-        
-#     #     [Ke,Me,fe] = shell_mass_stiffness_rhs( plate_COORDS, plate_material_properties, plate_thickness, plate_loads);
-#     #     [ plate_dofs ] = element_global_dofs( plate_nodes );
-#     #     ue = MODEL.u(plate_dofs);
-    
-#     #     MODEL.K(plate_dofs,plate_dofs) = MODEL.K(plate_dofs,plate_dofs) + Ke;
-#     #     MODEL.M(plate_dofs,plate_dofs) = MODEL.M(plate_dofs,plate_dofs) + Me;
-#     #     MODEL.fint(plate_dofs) = MODEL.fint(plate_dofs) + Ke*ue;
-#     #     MODEL.f(plate_dofs) = MODEL.f(plate_dofs) + fe;
-#     # end
-    
-#     % Assembly of nonlinear links
-    
-#     if (isfield(MODEL,'nl_link_elements'))
-#         n_links = numel(MODEL.nl_link_elements[:,0]);
-#         ks = max(max(diag(MODEL.K)))*1e3;
-    
-#         if (~isfield(MODEL,'nl_link_hist'))
-#             MODEL.nl_link_hist = cell(n_links,1);
-#             MODEL.nl_link_hist(:) ={struct('uj',{0,0,0,0,0,0},'rj',{0,0,0,0,0,0},'kj',{0,0,0,0,0,0})};
-#         end
-#     else
-#         n_links = 0;
-#     end
-    
-#     for e=1:n_links
-        
-#         link_nodes = MODEL.nl_link_elements(e,1:end);
-#         link_properties = MODEL.nl_link_bw_properties(MODEL.nl_link_properties(e,:),:);
-#         link_flags = MODEL.nl_link_flags(e,:);
-#         link_hist = MODEL.nl_link_hist{e,:};
-#         [ link_dofs ] = element_global_dofs( link_nodes );
-        
-#         ue = MODEL.u(link_dofs);
-        
-#         [finte, Ke, link_hist] = link_residual_stiffness(ue, link_properties, link_flags, link_hist, ks);
-        
-#         MODEL.nl_link_hist{e,:} = link_hist;
-        
-#         if e==1
-#             if (isfield(MODEL,'Hist')==1)
-#                 MODEL.Hist(1,nt) =link_hist(5).uj;
-#                 MODEL.Hist(2,nt) = link_hist(5).rj;
-#             end
-#         end
-        
-#         if e==9
-#             if (isfield(MODEL,'Hist')==1)
-#                 MODEL.Hist(3,nt) =link_hist(5).uj;
-#                 MODEL.Hist(4,nt) = link_hist(5).rj;
-#             end
-#         end
-    
-#         MODEL.K(link_dofs,link_dofs) = MODEL.K(link_dofs,link_dofs) + Ke;
-#         MODEL.fint(link_dofs) = MODEL.fint(link_dofs) + finte;
-#     end
-    
-#     % Assembly of the springs
-    
-#     if (isfield(MODEL,'springs')&&(numel(MODEL.springs)>0))
-    
-#         n_springs = numel(MODEL.springs[:,0]);
-#     else
-#         n_springs = 0;
-#     end
-    
-#     for s=1:n_springs
-#         node = MODEL.springs(s,1);
-#         spring_constants = MODEL.springs(s,2:end);
-#         [ dofs ] = node_global_dofs( node );
-#         MODEL.K(dofs,dofs) = MODEL.K(dofs,dofs) + diag(eye(numel(dofs))*spring_constants');
-#     end
-    
-#     % Assembly of masses
-    
-#     if (isfield(MODEL,'masses')&&(numel(MODEL.masses)>0))
-    
-#         n_masses = numel(MODEL.masses[:,0]);
-#     else
-#         n_masses = 0;
-#     end
-    
-#     for m=1:n_masses
-#         node = MODEL.masses(m,1);
-#         mass = MODEL.masses(m,2:end);
-#         [ dofs ] = node_global_dofs( node );
-#         MODEL.M(dofs,dofs) = MODEL.M(dofs,dofs) + diag(eye(numel(dofs))*mass');
-#     end
-# def apply_bc_nl( MODEL )
+#%% Time Integration
+class TimeIntegrationNM():
+    def __init__(self,Overallsystem, u_0,speed = 18, t_end = 1,dt = 0.0001):
+        """
+        Initialize time integration parameters for Newmark solver
 
-#     ndofs = numel(MODEL.nodes[:,0])*6;
-    
-#     % Nodal loads
-    
-#     if (numel(MODEL.nodal_loads)>0)
-    
-#         n_loads = numel(MODEL.nodal_loads[:,0]);
-    
-#         for l=1:n_loads
-#             node = MODEL.nodal_loads(l,1);
-#             load = MODEL.nodal_loads(l,2:end);
-#             [ dofs ] = node_global_dofs( node );
-#             MODEL.f(dofs) = MODEL.f(dofs) + load';
-#         end
-    
-#     end
-    
-#     % Imposed displacements
-    
-#     if (numel(MODEL.nodal_displacements)>0)
-        
-#         bc_dofs = [];
-#         bc_dofs_nz = [];
-#         bc_values = [];
-    
-#         for d=1:numel(MODEL.nodal_displacements[:,0])
-#             node = MODEL.nodal_displacements(d,1);
-#             [ dofs ] = node_global_dofs( node );
-#             dofs_act = dofs(find(MODEL.nodal_displacements(d,2:7)));
-#             bc_dofs    = [bc_dofs; dofs_act'];
-#             nz = find(MODEL.nodal_displacements(d,8:end));
-#             if (numel(nz)>0)
-#                 bc_dofs_nz = [bc_dofs_nz; dofs(nz)'];
-#                 bc_values = [bc_values; MODEL.nodal_displacements(d,nz+7)'];
-#             end
-#         end
-        
-#         if (numel(bc_dofs_nz)>0)
-#             fbc = MODEL.K(:,bc_dofs_nz)*bc_values;
-#             MODEL.f = MODEL.f - fbc;
-#         end
-    
-#         MODEL.K(bc_dofs, :) = 0;
-#         MODEL.K(:, bc_dofs) = 0;
-#         MODEL.M(bc_dofs, :) = 0;
-#         MODEL.M(:, bc_dofs) = 0;
-#         MODEL.f(bc_dofs) = 0;
-#         MODEL.fint(bc_dofs) = 0;
-        
-#         if (numel(bc_dofs_nz)>0)
-#             MODEL.f(bc_dofs_nz)=bc_values;
-#             MODEL.fint(bc_dofs_nz) = 0;
-#         end
-            
-#         diag_el = (bc_dofs-1)*(ndofs + 1) + 1;
-    
-#         MODEL.K(diag_el)=1;
-#         MODEL.M(diag_el)=1;
-#     end
+        Parameters
+        ----------
+        Overallsystem : Overall system assembly from RailFE.SystemAssembly
+        u_0 : Initial conditions on DOF vector.
+        speed : Speed integer. Currently varying speed no supported. The default is 18.
+        t_end : Duration of simulation time in seconds. The default is 1.
+        dt : Step size in seconds. The default is 0.0001.
+
+        Returns
+        -------
+        None.
+
+        """
+        self.OverallSystem = Overallsystem
+        self.speed = speed
+        self.index = 0
+        self.t_prev = 0
+        self.t_start = 0.0
+        self.t_end = t_end
+        self.dt = dt
+        self.nt = int((self.t_end-self.t_start)/self.dt)
+        self.speed = speed
+        self.u = u_0
+    def shift(self,xx):
+        """
+        Shift xx on changing timoshenko element
+
+        Parameters
+        ----------
+        xx : Initial Vector
+
+        Returns
+        -------
+        xx : Shifted Vector
+
+        """
+        if self.OverallSystem.modal_analysis:
+            eab = np.where(np.array(self.OverallSystem.u_names)=='w_axle_1')[0][0]+1 #end_of_body_assembly
+            xx_shifted = np.zeros(xx.shape)
+            xx_shifted[:eab] = xx[:eab]
+            shift = len(self.OverallSystem.repeated_segments.keys())*2+1
+            shift1 = self.OverallSystem.Track.Timoshenko4.modal_n_modes*len(self.OverallSystem.repeated_segments.keys())
+            xx_shifted[eab+shift:-shift-len(self.OverallSystem.Local.u_names_l)] = xx[eab+2*shift:-len(self.OverallSystem.Local.u_names_l)]
+            xx_shifted[-len(self.OverallSystem.Local.u_names_l)+shift1:-shift1] = xx[-len(self.OverallSystem.Local.u_names_l)+2*shift1:]
+            xx = xx_shifted         
+        else:
+            eab = np.where(np.array(self.OverallSystem.u_names)=='w_axle_1')[0][0]+1 #end_of_body_assembly
+            xx_shifted = np.zeros(xx.shape)
+            xx_shifted[:eab] = xx[:eab]
+            shift = len(self.OverallSystem.repeated_segments.keys())*2+1
+            xx_shifted[eab+shift:-shift] = xx[eab+2*shift:]
+            xx = xx_shifted
+        return xx
+    def newmark_slv(self):
+        """
+        Solve the time integration with Newmark Solver
+
+        Returns
+        -------
+        bool: return True if successfull, else return False
+
+        """
+        try:
+            newmark_nl(self)
+            return True
+        except Exception as e:
+            print('Exception: {}'.format(e))
+            return False

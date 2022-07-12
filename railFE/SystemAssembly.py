@@ -142,18 +142,18 @@ class LocalAssembly():
         self.M_local = M_local 
         self.K_local = K_local 
         self.C_local = C_local      
-    def interpolation_matrix(self,x_i,node_type = 'TIM4'): 
+    def interpolation_matrix(self,xi,node_type = 'TIM4'): 
         if node_type == 'TIM4EB':
-            N_0 = self.OverallSystem.Track.Timoshenko4eb.N_EF_w(x_i,0)
-            N_1 = self.OverallSystem.Track.Timoshenko4eb.N_EF_w(x_i,1)
-            N_2 = self.OverallSystem.Track.Timoshenko4eb.N_EF_w(x_i,2)
-            N_3 = self.OverallSystem.Track.Timoshenko4eb.N_EF_w(x_i,3)
+            N_0 = self.OverallSystem.Track.Timoshenko4eb.N_EF_w(xi,0)
+            N_1 = self.OverallSystem.Track.Timoshenko4eb.N_EF_w(xi,1)
+            N_2 = self.OverallSystem.Track.Timoshenko4eb.N_EF_w(xi,2)
+            N_3 = self.OverallSystem.Track.Timoshenko4eb.N_EF_w(xi,3)
             Psi = self.OverallSystem.Track.Timoshenko4eb.Psi_Modal(xi)  
         elif node_type == 'TIM4':
-            N_0 = self.OverallSystem.Track.Timoshenko4.N_w1(x_i)
-            N_1 = self.OverallSystem.Track.Timoshenko4.N_t1(x_i)
-            N_2 = self.OverallSystem.Track.Timoshenko4.N_w2(x_i)
-            N_3 = self.OverallSystem.Track.Timoshenko4.N_t2(x_i) 
+            N_0 = self.OverallSystem.Track.Timoshenko4.N_w1(xi)
+            N_1 = self.OverallSystem.Track.Timoshenko4.N_t1(xi)
+            N_2 = self.OverallSystem.Track.Timoshenko4.N_w2(xi)
+            N_3 = self.OverallSystem.Track.Timoshenko4.N_t2(xi) 
             Psi = self.OverallSystem.Track.Timoshenko4.Psi_Modal(xi)           
         if self.modal_analysis == True:
             # if self.OverallSystem.support_type == 'eb':
@@ -190,7 +190,7 @@ class LocalAssembly():
         [K_sys - K_c*delta**0.5]*q_sys
         where delta evaluated during convergence process.
         and 
-        E is a function of N(x_i_wheel)
+        E is a function of N(xi_wheel)
         '''
         K_c = K_c*1.0
         idxlist = [np.where(np.array(self.OverallSystem.u_names)=='w_axle_1')[0][0]]+ segment['node_indexes'] + segment['modal_indexes']
@@ -272,7 +272,7 @@ class OverallSystem():
     # M_sys*q_sys''+C_sys*q_sys'+K_sys*q_sys = f = f_c + f_ext
     
     # K_loc*w_loc = f_c
-    def __init__(self,support_type, n_sleepers= 81,modal_analysis = True,**kwargs):
+    def __init__(self,support_type, n_sleepers= 81,modal_analysis = True,function_track_roughness=None,function_wheel_roughness=None,**kwargs):
         #print('to do> Local assembly, Overall system and mass application from vehicle, herzian stiffness')
         self.support_type = support_type
         self.n_sleepers = n_sleepers
@@ -312,13 +312,29 @@ class OverallSystem():
         # Time Invariant State Space 
         observed_dofs = [[np.where(np.array(self.u_names)=='w_axle_1')[0][0]],[286,288]]
         self.assemble_state_space(observed_dofs)
+        
+        self.function_track_roughness = function_track_roughness
+        if function_track_roughness is None:# if no function_track_roughness is given, take default one
+            self.function_track_roughness = self.function_track_roughness_default
+        self.function_wheel_roughness = function_wheel_roughness
+        if function_wheel_roughness is None:# if no function_wheel_roughness is given, take default one
+            self.function_wheel_roughness = self.function_wheel_roughness_default
+        
     def w_irr_t(self,ti):
-         # Track Irregularities
+        w_irr = self.function_track_roughness(ti)
+        return w_irr
+    def w_irr_w(self,ti):
+        w_irr = self.function_wheel_roughness(ti) # Wheel Irregularities, factor of Pi*D
+        return w_irr
+    
+    def function_track_roughness_default(self,ti):
+        # Track Irregularities
+        # By default a unit impulse at 0.25s
         if hasattr(self,'ij')==False:
             self.ij = 0
         w_irr = 0
         if ti >=0.25 and self.ij<1000:
-            print(ti)
+            # print(ti)
             w_irr = (-scipy.signal.ricker(1000,30)[self.ij]/1000
                      +np.roll(-scipy.signal.ricker(1000,30)/1000,100)[self.ij]
                      -scipy.signal.unit_impulse(1000,'mid')[self.ij]/10000
@@ -327,9 +343,12 @@ class OverallSystem():
             self.ij +=1
         w_irr = w_irr + np.random.random()/500000
         return w_irr
-    def w_irr_w(self,ti):
-         # Wheel Irregularities, factor of Pi*D
-         return 0
+    def function_wheel_roughness_default(self,ti):
+        # Wheel Irregularities, factor of Pi*D
+        # By default no wheel roughness
+        w_irr = 0        
+        return w_irr
+        
     
     def ExternalExcitation(self):
         idx_mass_body = 0
@@ -390,10 +409,10 @@ class OverallSystem():
         # Calculate Local Position on 0.6m sleeper bays
         pos_local = pos-0.6*round(np.floor(pos/0.6))
         if pos_local<0:
-            print('Position <0, rounding up: {}'.format(str(pos_local)))
+            # print('Position <0, rounding up: {}'.format(str(pos_local)))
             pos_local = 0
         elif pos_local >0.6:
-            print('Position >0.6, rounding down: {}'.format(str(pos_local)))
+            # print('Position >0.6, rounding down: {}'.format(str(pos_local)))
             pos_local = 0.6
         # Find on which node segment we are
         #todo: this could be done better/faster
@@ -457,6 +476,64 @@ class OverallSystem():
     #     self.sys_upd.C = D_upd
     #     self.sys_upd.D = D_upd
         # print(time.time()-a)
+def system_matrix(support_type= 'eb',**kwargs): # eb or pt
+    OverallSyst = OverallSystem(support_type = support_type,**kwargs)
+    M = OverallSyst.M_sys
+    K = OverallSyst.K_sys
+    C = OverallSyst.C_sys
+    f = OverallSyst.f_sys
+    u_names = np.array(OverallSyst.u_names[:len(f)])
+    n_sleepers = OverallSyst.n_sleepers
+    
+    n = len(f) # number of DOFs
+    mid_sleeper = str(int((n_sleepers-1)/2-1))
+    if support_type == 'eb':
+        dof_rail_mid_span   = np.arange(n)[[True if (i == 'w_rail_{}_3'.format(mid_sleeper)) else False for i in u_names]]
+        dof_rail_support    = [np.arange(n)[[True if (i == 'w_rail_{}_1'.format(mid_sleeper)) else False for i in u_names]],
+                               np.arange(n)[[True if (i == 'w_rail_{}_2'.format(mid_sleeper)) else False for i in u_names]]]
+        dof_sleeper         = np.arange(n)[[True if (i == 'w_sleeper_{}_1'.format(mid_sleeper)) else False for i in u_names]]
+        dofs_rail           = np.arange(n)[[True if ('w_rail_' in i) else False for i in u_names]]
+        dofs_sleeper        = np.arange(n)[[True if ('w_sleeper_' in i) else False for i in u_names]]
+        
+        f1 = np.copy(f)
+        f2 = np.copy(f)
+        # f3 = np.copy(f)
+        f1[dof_rail_mid_span] = 1
+        f2[dof_rail_support,:] = 0.5
+        # f3[1]=1
+        f = np.hstack((f1,f2))#,f3))
+        
+    elif support_type == 'pt':
+        dof_rail_mid_span = np.arange(n)[[True if (i == 'w_rail_{}_4'.format(mid_sleeper)) else False for i in u_names]]
+        dof_rail_support  = [np.arange(n)[[True if (i == 'w_rail_{}_2'.format(mid_sleeper)) else False for i in u_names]]]
+        dof_sleeper         = np.arange(n)[[True if (i == 'w_sleeper_{}_1'.format(mid_sleeper)) else False for i in u_names]]
+        dofs_rail           = np.arange(n)[[True if ('w_rail_' in i) else False for i in u_names]]
+        dofs_sleeper        = np.arange(n)[[True if ('w_sleeper_' in i) else False for i in u_names]]
+      
+        f1 = np.copy(f)
+        f2 = np.copy(f)
+        f1[dof_rail_mid_span] = 1
+        f2[dof_rail_support,:] = 1
+        f = np.hstack((f1,f2))
+    return OverallSyst,M,K,C,f, dof_rail_mid_span,dof_rail_support,dof_sleeper,dofs_rail,dofs_sleeper
+
+def assemble_state_space(K,M,C,f,observed_dofs):
+    n= len(f)
+    k = f.shape[1]
+    m = len(observed_dofs)
+    # Assemble the state space system
+    A = np.vstack((np.hstack((np.zeros((n,n)),np.eye(n))),
+                    np.hstack((-scipy.linalg.solve(M,K),-scipy.linalg.solve(M,C)))))
+    B = np.vstack((np.zeros((n,k)),np.dot(np.linalg.inv(M),f)))
+    C = np.zeros((m,2*n))
+    for i in range(m):
+        C[i,observed_dofs[i]]=1/len(observed_dofs[i])
+    # C = np.vstack((np.zeros((int(n/2)-1,m)),np.eye(m),np.zeros((n+int(n/2)-10,m)))).T
+    D = np.zeros((m,k))
+    print(B.shape,D.shape)
+    sys = control.ss(A,B,C,D)
+    return sys
+
         
 if __name__ == "__main__":        
     xi = 0.5
