@@ -9,14 +9,14 @@ Table of Contents
 ==========================================================
 
 
-- [Background](#background)
-- [Install](#install)
-- [Usage](#usage)
-	- [Examples](#examples)
-- [Related Efforts](#related-efforts)
-- [Maintainers](#maintainers)
-- [Contributing](#contributing)
-- [License](#license)
+- `Background <background>`_
+- `Install <install>`_
+- `Usage <usage>`_
+	- `Examples <examples>`_
+- `Related Efforts <related-efforts>`_
+- `Maintainers <maintainers>`_
+- `Contributing <contributing>`_
+- `License <license>`_
 
 ==========================================================
 Background
@@ -41,11 +41,6 @@ The model is composed of several substructure components:
 .. math::
 
 f_c = \left\{\begin{matrix}K_H\delta^{1.5},\; \delta>0 \\ 0,\; \delta\leq0 \\\end{matrix}\right.
-
-
-Test :math:`f_c = \\left\\{\\begin{matrix}K_H\\delta^{1.5},\\; \\delta>0 \\\\ 0,\\; \\delta\\leq0 \\\\\\end{matrix}\\right`
-
-Test2 :math:`x = (-b +- \sqrt(b^2-4ac))/(2a).`. 
 
 ==========================================================
 System Equations and State Space representation:
