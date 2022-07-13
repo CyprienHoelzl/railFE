@@ -82,7 +82,8 @@ setup(name=packagename,
           "matplotlib",
           numpyversion,
           scipyversion,
-          "control"
+          "control",
+          "numpydoc"
           ],
       ext_modules=extensions,
       packages=packages,
