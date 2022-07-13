@@ -44,8 +44,8 @@ with open('README.md','r') as fd:
     long_description = fd.read()
 
 # Python version
-if sys.version_info[:2] < (3, 4):
-    sys.exit('\nExited: Requires Python 3.4 or newer!\n')
+if sys.version_info[:2] < (3, 7):
+    sys.exit('\nExited: Requires Python 3.7 or newer!\n')
 
 extensions = []
 
@@ -72,12 +72,12 @@ setup(name=packagename,
           'Topic :: Scientific/Engineering'
       ],
       #requirements
-      python_requires=">3.8",
+      python_requires=">=3.7",
       install_requires=[
           "h5py",
           "matplotlib",
           "numpy",
-          "scipy",
+          "scipy=1.7.x",
           "control"
           ],
       ext_modules=extensions,
