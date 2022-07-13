@@ -77,7 +77,7 @@ setup(name=packagename,
           "h5py",
           "matplotlib",
           "numpy",
-          "scipy=1.7.x",
+          "scipy=1.7.3",
           "control"
           ],
       ext_modules=extensions,
