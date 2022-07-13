@@ -72,7 +72,7 @@ setup(name=packagename,
           'Topic :: Scientific/Engineering'
       ],
       #requirements
-      python_requires=">3.6",
+      python_requires=">3.8",
       install_requires=[
           "h5py",
           "matplotlib",
