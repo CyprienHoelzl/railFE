@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Feb 19 16:21:46 2020
+"""Unit Conversions
 
-Unit Conversions  
+Usage:
+    The functions in this script can be used to convert from different angular coordinate systems.
 
-@author: Cyprien Hoelzl
+@author: 
+    CyprienHoelzl
 """
 import numpy as np
 #%% Unit conversions

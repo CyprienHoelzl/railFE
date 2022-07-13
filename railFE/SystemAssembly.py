@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Feb 19 16:21:46 2020
+"""Matrix Assembly of System
 
-Matrix Assembly of System
+Usage:
+    This script can be used to assemble local track system matrices, and join them into a  assemble a global stiffness matrix by summing up the terms from one array onto the second at specific array coordinates.
 
-@author: CyprienHoelzl
+@author: 
+    CyprienHoelzl
 """
 import numpy as np
 import scipy
@@ -15,6 +16,25 @@ from railFE.MatrixAssemblyOperations import addAtPos, addAtIdx
 #%% Local System Assembly
 class LocalAssembly():
     def __init__(self, OverallSystem,modal_analysis = True, modal_bays = 5):
+        """
+        Local System Assembly
+        
+            The Local System assembly script
+
+        Parameters
+        ----------
+        OverallSystem : Overall System object
+            Definition of Track and vehicle system parameters.
+        modal_analysis : boolean, optional
+            Should a modal analysis be performed. The default is True.
+        modal_bays : integer, optional
+            Number of sleeper bays for modal analysis. The default is 5.
+
+        Returns
+        -------
+        None.
+
+        """
         self.OverallSystem = OverallSystem
         self.modal_analysis = modal_analysis
         self.modal_bays = modal_bays
@@ -44,16 +64,22 @@ class LocalAssembly():
     
     def assembleLocalMatricesEB3el(self):
         # Summary printout
-        """Assembling System Matrix for 4DOF Timoshenko elements and 4DOF elastically supported Timoshenko element')
-        'The model starts with sleeper 0 and end with sleeper {}'.format(str(self.n_sleepers-1)))
+        """Assembling System Matrix for 4DOF Timoshenko elements and 4DOF elastically supported Timoshenko element
+        
+        The model starts with sleeper 0 and end with sleeper {}'.format(str(self.n_sleepers-1)))
+        
         Numbering convention:  w_i_1, t_i_1, w_i_s, w_i_2, t_i_2, w_i_3, t_i_3
-        Where: 
-              \tw is the vertical displacement, 
-              \tt is the rotation theta, 
-              \ti is the number of bay element, 
-              \tnode _1 and _2 are on the left/right sleeper_i side respectively,
-              \tnode _s is the sleeper node,
-              \tnode _3 is the mid span node."""
+        
+        Parameters
+        ----------
+              w : is the vertical displacement, 
+              t : is the rotation theta, 
+              i : is the number of bay element, 
+              node _1 and _2 : are on the left/right sleeper_i side respectively,
+              node _s : is the sleeper node,
+              node _3 : is the mid span node.
+              
+        """
         
         no_modes = self.OverallSystem.Track.Timoshenko4.modal_n_modes
         n_nodes = 3
@@ -99,16 +125,21 @@ class LocalAssembly():
     def assembleLocalMatricesPT4el(self):
         # Summary printout
         """Assembling System Matrix for 4DOF Timoshenko elements with point support
-        'The model starts with sleeper 0 and end with sleeper {}'.format(str(self.n_sleepers-1)))
+        
+        The model starts with sleeper 0 and end with sleeper {}'.format(str(self.n_sleepers-1)))
+        
         Numbering convention:  w_rail_i_1, t_rail_i_1, w_rail_i_2, t_rail_i_2, w_rail_i_s, w_rail_i_3, t_rail_i_3, w_rail_i_4, t_rail_i_4
-        Where: 
-              \tw is the vertical displacement, 
-              \tt is the rotation theta, 
-              \ti is the number of bay element, 
-              \tnode _1 and _3 are on the left/right sleeper_i side respectively,
-              \tnode _2 are is the rail node connected to the track,
-              \tnode _s is the sleeper node,
-              \tnode _4 is the mid span node.
+        
+        Parameters
+        ----------
+              w: is the vertical displacement, 
+              t: is the rotation theta, 
+              i: is the number of bay element, 
+              node _1 and _3: are on the left/right sleeper_i side respectively,
+              node _2: is the rail node connected to the track,
+              node _s: is the sleeper node,
+              node _4: is the mid span node.
+              
         """
         no_modes = self.OverallSystem.Track.Timoshenko4.modal_n_modes
         n_nodes = 4
@@ -173,25 +204,55 @@ class LocalAssembly():
         return self.E
 
     def assembleLocalMatrices(self,xi,segment,K_c,Yi,w_irr):
-        '''The local system connect the vehicle to the track with a non-linear Hertzian spring
-        The force from the contact on the system's DOFs:
-        f_c = -[-1, N, 1].T*f_c = -[-1, N, 1].T*K_c*delta**1.5
-        where delta = w_G,r + w_loc + w_irr - w_w
-        K_c here assumed constant
-          w_G,r=N(x_w)*q_tr and w_loc=q_l refer to global and local rail displacement respectively,
-          w_w is the wheel displacement
-          w_irr are wheel-rail body contact irregularities
-        Vectorial form:
-        f_c = -[-1, N, 1].T*f_c = -K_c*delta**0.5*[-1, N, 1].T*[1, N, 1, -1]*[w_w,q_tr,q_L,w_irr].T
-        Separating irregularities:
-        f_c = K_c*delta**0.5*[1, -N, -1].T*[-1, N, 1]*[w_w,q_tr,q_L].T +  K_c*delta**0.5*[1, -N, -1].T*w_irr
-        f_c = K_c*delta**0.5*E*q_sys + f_irr
+        """
+        Assemble the local matrices
         
-        [K_sys - K_c*delta**0.5]*q_sys
-        where delta evaluated during convergence process.
-        and 
-        E is a function of N(xi_wheel)
-        '''
+        The local system connect the vehicle to the track with a non-linear Hertzian spring
+        The force from the contact on the system's DOFs:
+        
+            f_c = -[-1, N, 1].T*f_c = -[-1, N, 1].T*K_c*delta**1.5
+        
+            where delta = w_G,r + w_loc + w_irr - w_w
+
+        K_c here assumed constant
+            w_G,r=N(x_w)*q_tr and w_loc=q_l refer to global and local rail displacement respectively,
+            w_w is the wheel displacement
+            w_irr are wheel-rail body contact irregularities
+        
+        Vectorial form:
+            f_c = -[-1, N, 1].T*f_c = -K_c*delta**0.5*[-1, N, 1].T*[1, N, 1, -1]*[w_w,q_tr,q_L,w_irr].T
+        
+        Separating irregularities:
+            f_c = K_c*delta**0.5*[1, -N, -1].T*[-1, N, 1]*[w_w,q_tr,q_L].T +  K_c*delta**0.5*[1, -N, -1].T*w_irr
+            f_c = K_c*delta**0.5*E*q_sys + f_irr
+            [K_sys - K_c*delta**0.5]*q_sys
+            
+            where delta evaluated during convergence process.
+            and E is a function of N(xi_wheel)
+        
+        Parameters
+        ----------
+        xi : float
+            perc position on element (0-1).
+        segment : dictionary
+            repeated_segments.
+        K_c : float
+            Herzian spring stiffness.
+        Yi : TYPE
+            DESCRIPTION.
+        w_irr : array
+            Force due to irregularities on wheel or track.
+
+        Returns
+        -------
+        K_loc_mod : array
+            Herzian spring stiffness.
+        f_loc_mod : array 
+            Force due to rail/wheel irregularities.
+        f_int_mod : array
+            Force due to rail deformation.
+
+        """
         K_c = K_c*1.0
         idxlist = [np.where(np.array(self.OverallSystem.u_names)=='w_axle_1')[0][0]]+ segment['node_indexes'] + segment['modal_indexes']
         E = self.interpolation_matrix(xi,segment['type']) 
@@ -256,7 +317,30 @@ class LocalAssembly():
         self.f_int_mod = addAtIdx(np.copy(self.f_int),self.f_it[:-1,:],([0],idxlist))
         return  self.K_loc_mod,self.f_loc_mod,self.f_int_mod
     def assembleLocalMatricesStatic(self,xi,segment,K_c,w_irr):
-        """The local system connect the vehicle to the track with a linear Hertzian spring"""
+        """
+        Assemble the local matrices for the static case
+
+            The local system connect the vehicle to the track with a linear Hertzian spring
+    
+        Parameters
+        ----------
+        xi : float
+            perc position on element (0-1).
+        segment : dictionary
+            repeated_segments.
+        K_c : float
+            Herzian spring stiffness.
+        w_irr : array
+            Force due to irregularities on wheel or track.
+
+        Returns
+        -------
+        K_loc_mod_static : array
+            Herzian spring stiffness.
+        f_loc_mod_static : array
+            Force due to rail/wheel irregularities.
+
+        """
         idxlist = [np.where(np.array(self.OverallSystem.u_names)=='w_axle_1')[0][0]]+ segment['node_indexes'] + segment['modal_indexes']
         E = self.interpolation_matrix(xi,segment['type']) 
         # Stiffness of contact spring
@@ -269,10 +353,37 @@ class LocalAssembly():
 
 #%% Overall System Equation Assembly
 class OverallSystem():
-    # M_sys*q_sys''+C_sys*q_sys'+K_sys*q_sys = f = f_c + f_ext
+    """
+    The Overall System is assembled with this class
+    The following system of equations defines the system dynamics:
+        M_sys*q_sys''+C_sys*q_sys'+K_sys*q_sys = f = f_c + f_ext
+        K_loc*w_loc = f_c
     
-    # K_loc*w_loc = f_c
+    """
     def __init__(self,support_type, n_sleepers= 81,modal_analysis = True,function_track_roughness=None,function_wheel_roughness=None,**kwargs):
+        """
+        Initialize Overall system assembly
+
+        Parameters
+        ----------
+        support_type : string
+            Type of support ('pt' or 'eb').
+        n_sleepers : integer, optional
+            Number of sleepers on default track. The default is 81.
+        modal_analysis : bool, optional
+            Should modal analysis be performed? The default is True.
+        function_track_roughness : track roughness function, optional
+            Function of time f(t) returning the roughness. The default is None which calls a function implementing an impulse after 0.25seconds.
+        function_wheel_roughness : wheel roughness function, optional
+            Function of time returning the wheel roughness. The default is None, which calls a function returning 0 (perfect wheel).
+        **kwargs : arguments
+            kwargs for TrackAssembly.
+
+        Returns
+        -------
+        None.
+
+        """
         #print('to do> Local assembly, Overall system and mass application from vehicle, herzian stiffness')
         self.support_type = support_type
         self.n_sleepers = n_sleepers
@@ -328,8 +439,21 @@ class OverallSystem():
         return w_irr
     
     def function_track_roughness_default(self,ti):
-        # Track Irregularities
-        # By default a unit impulse at 0.25s
+        """
+        Track Irregularities
+            By default a unit impulse at 0.25s
+        
+
+        Parameters
+        ----------
+        ti : float
+            time in seconds.
+
+        Returns
+        -------
+        w_irr : track irregularity.
+
+        """
         if hasattr(self,'ij')==False:
             self.ij = 0
         w_irr = 0
@@ -344,13 +468,35 @@ class OverallSystem():
         w_irr = w_irr + np.random.random()/500000
         return w_irr
     def function_wheel_roughness_default(self,ti):
-        # Wheel Irregularities, factor of Pi*D
-        # By default no wheel roughness
+        """
+        Wheel Irregularities, factor of Pi*D
+            By default no wheel roughness
+        
+        
+        Parameters
+        ----------
+        ti : float 
+            time of simulation.
+
+        Returns
+        -------
+        w_irr : 0.
+
+        """
         w_irr = 0        
         return w_irr
         
     
     def ExternalExcitation(self):
+        """
+        Apply external excitation
+
+        Returns
+        -------
+        f_sys : array
+            system force vector.
+
+        """
         idx_mass_body = 0
         idx_mass_axle = 1
         f_sys = np.zeros((self.n_dof,1))
@@ -358,6 +504,23 @@ class OverallSystem():
         f_sys = addAtIdx(f_sys,self.f_ext,([0],[idx_mass_body,idx_mass_axle]))    
         return f_sys
     def updateSystem(self,ti,Yi,speed):
+        """
+        Update system for non-linear terms
+
+        Parameters
+        ----------
+        ti : float
+            timestamp of simulation.
+        Yi : TYPE
+            DESCRIPTION.
+        speed : float
+            speed.
+
+        Returns
+        -------
+        None.
+
+        """
         xi,segment = self.timeToLocalReference(ti,speed)
             
         K_c = self.Track.Timoshenko4.railproperties.K_c
@@ -372,6 +535,17 @@ class OverallSystem():
         #     print(ti)
         
     def iterated_nodes(self):
+        """
+        Recursive node definition
+
+        Returns
+        -------
+        repeated_segments_coordinates : dict
+            coordinates of nodes.
+        repeated_segments : dict
+            description of nodes.
+
+        """
         if self.support_type=='pt':
             idx_w_4p = np.arange(self.n_dof)[np.array(self.u_names) == 'w_rail_{}_4'.format(str(int((self.n_sleepers-1)/2-1)))][0]
             idx_w_1 = np.arange(self.n_dof)[np.array(self.u_names) == 'w_rail_{}_1'.format(str(int((self.n_sleepers-1)/2)))][0]
@@ -404,6 +578,24 @@ class OverallSystem():
             repeated_segments_coordinates =  {'id':['31','12','23'],'coords':[0,0.22,0.38,0.6]}
         return repeated_segments_coordinates,repeated_segments
     def timeToLocalReference(self,t_glob,speed):
+        """
+        From time and speed, calculate position in local reference (segment + xi)
+
+        Parameters
+        ----------
+        t_glob : float
+            time in seconds.
+        speed : float
+            speed in meter/second.
+
+        Returns
+        -------
+        xi : float
+            position on segment.            
+        segment : dictionary
+            segment attribute dictionary.
+
+        """
         # Calculate Global Position
         pos = self.timeToGlobalPos(t_glob,speed)
         # Calculate Local Position on 0.6m sleeper bays
@@ -424,12 +616,44 @@ class OverallSystem():
         return xi,segment
                   
     def timeToGlobalPos(self,t_glob,speed):
+        """
+        From time and speed, calculate rolled distance on track (pos_glob)
+
+        Parameters
+        ----------
+        t_glob : float
+            time in seconds.
+        speed : float
+            speed in meter/second.
+
+        Returns
+        -------
+        pos_glob : float
+            rolled distance in meters.
+
+        """
         # Relative Position at t=0:
         pos_rel_0 = 0 # 0::starts on node 41
         self.speed = speed # [m/s] constant velocity defined here
         pos_glob = self.speed*t_glob + pos_rel_0
         return pos_glob
     def assemble_state_space(self,observed_dofs):
+        """
+        Generate State Space representation of system
+        
+
+        Parameters
+        ----------
+        observed_dofs : array
+            index of observed DOFs.
+    
+        Returns
+        -------
+        sys : control system
+            State space system from control library.
+
+
+        """
         # Assemble the base state space representation (time invariant)
         M = self.M_sys
         K = self.K_sys
@@ -476,7 +700,42 @@ class OverallSystem():
     #     self.sys_upd.C = D_upd
     #     self.sys_upd.D = D_upd
         # print(time.time()-a)
-def system_matrix(support_type= 'eb',**kwargs): # eb or pt
+        
+def system_matrix(support_type= 'eb',**kwargs): 
+    """
+    Create system matrix
+
+    Parameters
+    ----------
+    support_type : string, optional
+        'pt' or 'eb' for punctual or distributed support. The default is 'eb'.
+    **kwargs : overall system kwargs.
+
+    Returns
+    -------
+    OverallSyst : TYPE
+        DESCRIPTION.
+    M : array
+        Mass Matrix.
+    K : array
+        Stiffness Matrix.
+    C : array
+        Damping Matrix.
+    f : array
+        Force vector.
+    dof_rail_mid_span : array
+        indexes of rail midspan coordinates.
+    dof_rail_support : array
+        indexes of rail support coordinates.
+    dof_sleeper : array
+        indexes of sleeper coordinates.
+    dofs_rail : array
+        indexes of rails coordinates.
+    dofs_sleeper : array
+        indexes of sleepers coordinates.
+
+    """
+    # eb or pt
     OverallSyst = OverallSystem(support_type = support_type,**kwargs)
     M = OverallSyst.M_sys
     K = OverallSyst.K_sys
@@ -518,6 +777,34 @@ def system_matrix(support_type= 'eb',**kwargs): # eb or pt
     return OverallSyst,M,K,C,f, dof_rail_mid_span,dof_rail_support,dof_sleeper,dofs_rail,dofs_sleeper
 
 def assemble_state_space(K,M,C,f,observed_dofs):
+    """
+    Generate State Space representation of system
+    
+    For a system of type: 
+        Mx''+Cx'+Kx = f
+    Transform to the representation:
+        Ay+Bu=q
+        Cy+Du=q
+        
+    Parameters
+    ----------
+    K : 2d array
+        Sitffness matrix.
+    M : 2d array
+        Mass matrix.
+    C : 2d array
+        Damping matrix.
+    f : 2d array
+        Force array.
+    observed_dofs : array
+        index of observed DOFs.
+
+    Returns
+    -------
+    sys : control system
+        State space system from control library.
+
+    """
     n= len(f)
     k = f.shape[1]
     m = len(observed_dofs)

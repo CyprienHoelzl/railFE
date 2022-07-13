@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 30 13:53:43 2020
+"""Solve time integration of system
 
-@author: CyprienHoelzl
+Usage:
+    See examples
+    
+@author: 
+    CyprienHoelzl
 """
 import scipy
 import numpy as np
