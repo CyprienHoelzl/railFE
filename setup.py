@@ -18,11 +18,6 @@ except ImportError:
     from distutils.core import setup
     from distutils.extension import Extension
 
-try:
-    import numpy as np
-except ImportError:
-    raise ImportError('railFE requires the NumPy package.')
-
 import glob
 import os
 import pathlib
