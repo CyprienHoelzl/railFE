@@ -36,7 +36,7 @@ with open('railFE/_version.py', 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
                         fd.read(), re.MULTILINE).group(1)
 
-# Parse package name from init file. Importing __init__.py / railFE will break as railFE depends on compiled .pyx files.
+# Parse package name from init file.
 with open('railFE/__init__.py', 'r') as fd:
     packagename = re.search(r'^__name__\s*=\s*[\'"]([^\'"]*)[\'"]',
                             fd.read(), re.MULTILINE).group(1)
@@ -44,8 +44,8 @@ with open('railFE/__init__.py', 'r') as fd:
 
 packages = [packagename, 'examples']
 
-# Parse long_description from README.rst file.
-with open('README.MD','r') as fd:
+# Parse long_description from README.md file.
+with open('README.md','r') as fd:
     long_description = fd.read()
 
 # Python version
@@ -53,6 +53,8 @@ if sys.version_info[:2] < (3, 4):
     sys.exit('\nExited: Requires Python 3.4 or newer!\n')
 
 extensions = []
+
+print(packages)
 
  # SetupTools Required to make package
 import setuptools

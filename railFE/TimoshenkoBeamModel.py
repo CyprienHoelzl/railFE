@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Feb 19 16:21:46 2020
+"""Rail beam formulation
+  
+For the rail formulation a timoshenko 4, 4DOF element is used 
+with nodal displacement vector u^{(e)} = {w_1,\theta_1,w_2,\theta_2}
 
-# Rail beam formulation
-  For the rail formulation a timoshenko 4, 4DOF element is used
-  with nodal displacement vector u^{(e)} = {w_1,\theta_1,w_2,\theta_2}
-  A TIM7 FE element could also be used, and  would fullfill C(1).
+Extentions:
+    - A TIM7 FE element could also be used, and  would fullfill C(1).
+    - Currently this package is insufficiently documented
 
-@author: CyprienHoelzl
+Usage:
+    See examples
+
+@author: 
+    CyprienHoelzl
 """
 import numpy as np
-import control
 import scipy.integrate as integrate
 import scipy
 from collections.abc import Iterable   # drop `.abc` with Python 2.7 or lower
@@ -19,15 +23,15 @@ def IsIterable(obj):
 
 class Timoshenko4():
     """
-    # Implementation of the Timoshenko4 beam using the formulation in:
-      https://www.sciencedirect.com/science/article/pii/0045794993902437
-      https://link.springer.com/content/pdf/10.1007/s00466-009-0431-2.pdf
-      http://people.duke.edu/~hpgavin/cee541/StructuralElements.pdf
-      Static analysis of Timoshenko beam resting on elastic half-plane
-      based on the coupling of locking-free finite elements and boundary
-      integral
-      proposed by Nerio Tullini · Antonio Tralli
-      """
+    Implementation of the Timoshenko4 beam using the formulation in:
+        https://www.sciencedirect.com/science/article/pii/0045794993902437
+        https://link.springer.com/content/pdf/10.1007/s00466-009-0431-2.pdf
+        http://people.duke.edu/~hpgavin/cee541/StructuralElements.pdf
+    
+    Static analysis of Timoshenko beam resting on elastic half-plane
+    based on the coupling of locking-free finite elements and boundary
+    integral proposed by Nerio Tullini · Antonio Tralli
+    """
     def __init__(self,railproperties,elementlength,modal_analysis  =True,modal_n_modes=10):
         self.railproperties = railproperties
         self.L = elementlength

@@ -1,5 +1,5 @@
 # railFE: Simplified Vehicle Track Interaction Model
-Dynamic simulation of a simplified rail vehicle rolling on a railway track. The track is modelled as a timoshenko beam rail on discrete sleeper supports. The rail vehicle is modelled as a quarter car model.
+Dynamic simulation of a simplified rail vehicle rolling on a railway track. The track is modelled as a timoshenko rail beam on discrete sleeper supports. The rail vehicle is modelled as a quarter car model.
 
 ## Table of Contents
 
@@ -15,12 +15,15 @@ Dynamic simulation of a simplified rail vehicle rolling on a railway track. The 
 ## Background
 
 ![Vehicle-Track FE Model](figs/VehicleTrackFEModel.png)
+
 This model can be used to simulate the high frequency dynamics of the vertical vehicle-rail interaction.
+railFE can be used to construct the state space matrices of a discretely supported railway track, of railway vehicles and solve the non-linear Herzian contact mechanics between the rail and the wheel. 
+railFE can be used to extract the frequency response function at selected degrees of freedom. It further allows the solution of a linear system of coupled differential equations.
 
 ## Model Description
 
 The model is composed of several substructure components:
-- Vehicle assembly (i.e. from Simpack),
+- Vehicle assembly or properties (i.e. from Simpack),
 - Track assembly (2D FE Model of Beam: 4DOF Timoshenko elements),
 - Non-linear Hertzian contact spring:  
 
@@ -57,20 +60,21 @@ Once you have installed the aforementioned tools follow these steps to build and
 **You are now ready to proceed to running railFE.**
 
 ## Usage
-railFE is designed as an extensible Python package.
+railFE is designed as an extensible Python package. 
 
 ### Examples
 
-The folder railFE/examples contains several usage examples of the 
-1. Evaluation of the frequency response of the track (selected observed degrees of freedom) under a point load applied at a fixed location on the Finite Element model.  
-2. Simulation of dynamic response of the system with gaussian track noise. 
-3. Simulation of dynamic response when crossing a geometric irregularity on the rail (impulse like excitation).
-4. Analytic solution of the timoshenko beam shape functions: TimoshenkoBeam_AnalyticShapeFunctions.py
+The folder railFE/examples contains several usage cases of the package:
+1. [Example 1](examples/timoshenkoBeamElements_plotting.py): Plotting the shape function for 4DOF Timoshenko elements without and with elastic bedding.
+2. [Example 2](examples/TrackFrequencyResponseEvaluation.py): Evaluation of the frequency response of the track (selected observed degrees of freedom) under a point load applied at a fixed location on the Finite Element model.  
+3. [Example 3 to do](examples/to_do): Simulation of dynamic response of the system with gaussian track noise. 
+4. [Example 4](examples/timeintegration_default_track_impulse.py): Simulation of dynamic response when crossing a geometric irregularity on the rail (impulse like excitation and gaussian noise).
+5. [Example 5](examples/timeintegration_varyingtrackparams_impulse.py): Simulation of dynamic response when crossing a geometric irregularity on the rail with different track parameters and speeds  (impulse like excitation and gaussian noise).
+6. [Example 6](examples/TimoshenkoBeam_AnalyticShapeFunctions.py): Analytic solution of the timoshenko beam shape functions: TimoshenkoBeam_AnalyticShapeFunctions.py
 
 ## Maintainers
 
 [@CyprienHoelzl](https://github.com/CyprienHoelzl/).
-
 
 ## Contributing
 
