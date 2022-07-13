@@ -53,8 +53,10 @@ print(packages)
 
 if sys.version_info[:2]< (3, 8):
     scipyversion =  "scipy==1.7.3"
+    numpyversion =  "numpy==1.21.6"
 else: 
     scipyversion =  "scipy"
+    numpyversion =  "numpy"
 
 setup(name=packagename,
       version=version,
@@ -78,7 +80,7 @@ setup(name=packagename,
       install_requires=[
           "h5py",
           "matplotlib",
-          "numpy",
+          numpyversion,
           scipyversion,
           "control"
           ],
