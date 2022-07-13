@@ -34,13 +34,17 @@ Model Description
 ==========================================================
 
 The model is composed of several substructure components:
+
 - Vehicle assembly or properties (i.e. from Simpack),
 - Track assembly (2D FE Model of Beam: 4DOF Timoshenko elements),
 - Non-linear Hertzian contact spring:
 
-.. math::
+.. math:: 
 
-f_c = \left\{\begin{matrix}K_H\delta^{1.5},\; \delta>0 \\ 0,\; \delta\leq0 \\\end{matrix}\right.
+		f_c = \left\{\begin{matrix}
+		K_H\delta^{1.5},\; \delta>0 \\ 
+		0,\; \delta\leq0 \\
+		\end{matrix}\right.
 
 ==========================================================
 System Equations and State Space representation:
@@ -48,16 +52,16 @@ System Equations and State Space representation:
 
 The equilibrium matrices of the system are formulated as: 
 
-.. math::
+.. math:: 
 
-M_{sys}\ddot{q}_{sys}+C_{sys}\dot{q}_{sys}+[K_{sys}-K_c\delta^{0.5}E]q_{sys}=f_{irr}+f_{ext}
+		M_{sys}\ddot{q}_{sys}+C_{sys}\dot{q}_{sys}+[K_{sys}-K_c\delta^{0.5}E]q_{sys}=f_{irr}+f_{ext}
 
 
 Local dynamics, modal superposition:
 
-.. math::
+.. math:: 
 
-\ddot{\eta}_{i}+2\zeta_{i}\omega_{i}\dot{\eta}_{i}+\omega_{i}^2\eta_{i}+M_{cross}\ddot{q}_{tr}=f_{i}
+		\ddot{\eta}_{i}+2\zeta_{i}\omega_{i}\dot{\eta}_{i}+\omega_{i}^2\eta_{i}+M_{cross}\ddot{q}_{tr}=f_{i}
 
 
 ==========================================================
@@ -84,6 +88,7 @@ Usage
 ==========================================================
 
 railFE is designed as an extensible Python package. 
+To use railFE, see the examples and python api.
 
 ----------------------------------------------------------
 Examples
