@@ -22,7 +22,7 @@ Table of Contents
 Background
 ==========================================================
 
-.. image:: figs/VehicleTrackFEModel.png 
+.. image:: ../../figs/VehicleTrackFEModel.png 
 	:target: Vehicle-Track FE Model
 
 This model can be used to simulate the high frequency dynamics of the vertical vehicle-rail interaction.
