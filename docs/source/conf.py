@@ -13,7 +13,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../railFE'))
-from _version import __version__,codename
+from railFE._version import __version__,codename
 import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
