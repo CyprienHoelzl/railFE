@@ -51,8 +51,10 @@ extensions = []
 
 print(packages)
 
- # SetupTools Required to make package
-import setuptools
+if sys.version_info[:2]< (3, 8):
+    scipyversion =  "scipy==1.7.3"
+else: 
+    scipyversion =  "scipy"
 
 setup(name=packagename,
       version=version,
@@ -77,7 +79,7 @@ setup(name=packagename,
           "h5py",
           "matplotlib",
           "numpy",
-          "scipy>=1.7.3",
+          scipyversion,
           "control"
           ],
       ext_modules=extensions,
