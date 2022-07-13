@@ -25,6 +25,12 @@ railFE User Guide
 
 .. toctree::
     :maxdepth: 2
+    :caption: Python API 
+
+    railFE
+
+.. toctree::
+    :maxdepth: 2
     :caption: Help and support
 
     faqs
