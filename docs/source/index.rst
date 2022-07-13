@@ -7,13 +7,13 @@ railFE User Guide
     :caption: Introduction
 
     include_readme
-    features
-    railmodelling
 
 .. toctree::
     :maxdepth: 2
     :caption: Using railFE
 
+    railmodelling
+    features
     input
     output
 
