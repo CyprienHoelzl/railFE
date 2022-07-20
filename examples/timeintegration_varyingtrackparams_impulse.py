@@ -86,10 +86,13 @@ for k_ballast in np.array([80,100,150,200])*10**6:
 #%%% Plot the Timeseries for the ballast parameter and speed
 from matplotlib import cm
 
-fig,ax = plt.subplots(figsize = (8,4),ncols =1) 
+speedsdict = [str(i) for i in sorted(set([int(i.split('_')[1]) for i in t_integration.keys()]))]
+speedsdict = dict([(i,j) for (j,i) in enumerate(speedsdict)])
+
+fig,ax = plt.subplots(figsize = (12,8),nrows = len(speedsdict),ncols =1,sharex=True,sharey=True,dpi=200) 
 for k_key in t_integration.keys():
     time_integration = t_integration[k_key]
-    clr = (int(k_key.split('_')[1]))/200*0.7+0.2
+    clr = 0.8#(int(k_key.split('_')[1]))/200*0.7+0.2
     if k_key.split('_')[0]=='80':
        color = cm.Reds(clr)
     elif  k_key.split('_')[0]=='100':
@@ -99,15 +102,16 @@ for k_key in t_integration.keys():
     elif  k_key.split('_')[0]=='200':
        color = cm.Blues(clr)
     delta = len(np.arange(0,time_integration.t_end,time_integration.dt))-len(time_integration.A[2,:])
-    ax.plot(np.arange(0,time_integration.t_end,time_integration.dt)*time_integration.speed,
-            time_integration.U[2,:][:delta]*1000, label ='k={} MN/m, v={} km/h'.format(*k_key.split('_')),c=color)
-    ax.set_ylabel('axle box acceleration[$m/s^2$]')
-    ax.scatter([0.3+i*0.6 for i in range(int(time_integration.speed*time_integration.t_end/0.6))],  
-               np.mean(time_integration.A[106])*np.ones(int(time_integration.speed*time_integration.t_end/0.6))*0.25,
-                               marker = 's', color=color,s=40)
-ax.set_xlabel('position [m]')
+    ax[speedsdict[k_key.split('_')[1]]].plot(np.arange(0,time_integration.t_end,time_integration.dt)*time_integration.speed-0.25*time_integration.speed,
+            time_integration.A[2,:][:delta], label ='k={} MN/m, v={} km/h'.format(*k_key.split('_')),c=color)
+    ax[speedsdict[k_key.split('_')[1]]].set_ylabel('ABA [$m/s^2$]')
+    # ax.scatter([0.3+i*0.6 for i in range(int(time_integration.speed*time_integration.t_end/0.6))],  
+    #            np.mean(time_integration.A[106])*np.ones(int(time_integration.speed*time_integration.t_end/0.6))*0.25,
+    #                            marker = 's', color=color,s=40)
+    ax[speedsdict[k_key.split('_')[1]]].set_title('time series for {} m/s'.format(k_key.split('_')[1]))
+ax[-1].set_xlabel('position [m]')
 # ax.set_ylabel('axle box position [mm]')
-ax.set_xlim([0,17.5])
+ax[-1].set_xlim([0,3])
 fig.legend(loc=7,title='Ballast Parameters') 
 fig.tight_layout()  
 fig.subplots_adjust(right=0.65,wspace=0.25)   
