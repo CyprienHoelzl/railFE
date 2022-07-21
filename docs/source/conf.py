@@ -32,7 +32,7 @@ release = __version__
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc','numpydoc',
-   'sphinx.ext.autosummary',
+   'sphinx.ext.autosummary', 'sphinx.ext.autosectionlabel'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -57,3 +57,6 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 html_extra_path = ["google32bf2273e13eed63.html"]
+
+# Make sure the target is unique
+autosectionlabel_prefix_document = True

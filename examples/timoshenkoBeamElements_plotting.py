@@ -33,6 +33,7 @@ def plot_shapefunctions():
     ax.set_xlabel(r"$\xi = x/L$")
     ax.set_ylabel('$[-]$')
     ax.set_title('Interpolation Functions for TIM4')
+    fig.tight_layout()
     return fig,ax
 
 def plot_shapefunctions_el():
@@ -58,6 +59,7 @@ def plot_shapefunctions_el():
     ax.set_xlabel(r"$\xi = x/L$")
     ax.set_ylabel('$[-]$')
     ax.set_title('Interpolation Functions for TIM4 elastic bedding')
+    fig.tight_layout()
     return fig,ax
 def plot_comparison():
     """
@@ -120,15 +122,16 @@ def plot_sleeperstiffnessNs():
     ax.set_xlim([0,1])
     ax.set_ylim([0,800])
     ax.set_zlim([0,1])
-    ax.set_title('Interpolation function for the sleeper displacement for flexible track element')
+    ax.set_title('Interpolation function for the sleeper displacement \nfor flexible track element')
+    fig.tight_layout()
     return fig,ax  
 #%% Application
 if __name__ == "__main__":
     fig,ax = plot_shapefunctions()
-    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_Timoshenko4.pdf')
+    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_Timoshenko4.png',dpi=200)
     fig,ax = plot_shapefunctions_el()
-    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_Timoshenko4_elasticbedding.pdf')
+    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_Timoshenko4_elasticbedding.png',dpi=200)
     fig,ax = plot_comparison()
-    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_comparison_Timoshenko4_elasticbedding.pdf')
+    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_comparison_Timoshenko4_elasticbedding.png',dpi=200)
     fig,ax = plot_sleeperstiffnessNs()
-    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_sleeper_stiffness_sleeperdisplacement.pdf')
+    fig.savefig('../figs/timoshenkoBeamElements/shapeFunctions_sleeper_stiffness_sleeperdisplacement.png',dpi=200)

@@ -6,7 +6,7 @@ railFE User Guide
     :maxdepth: 2
     :caption: Introduction
 
-    include_readme
+    introduction
 
 .. toctree::
     :maxdepth: 2

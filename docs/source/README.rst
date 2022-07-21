@@ -9,14 +9,13 @@ Table of Contents
 ==========================================================
 
 
-- `Background <background>`_
-- `Install <install>`_
-- `Usage <usage>`_
-	- `Examples <examples>`_
-- `Related Efforts <related-efforts>`_
-- `Maintainers <maintainers>`_
-- `Contributing <contributing>`_
-- `License <license>`_
+- :ref:`Background <introduction:background>`
+- :ref:`Install <introduction:install>`
+- :ref:`Usage <introduction:usage>`
+	- :ref:`Examples <introduction:examples>`
+- :ref:`Maintainers <introduction:maintainers>`
+- :ref:`Contributing <introduction:contributing>`
+- :ref:`License <introduction:license>`
 
 ==========================================================
 Background
@@ -44,7 +43,7 @@ The model is composed of several substructure components:
 		f_c = \left\{\begin{matrix}
 		K_H\delta^{1.5},\; \delta>0 \\ 
 		0,\; \delta\leq0 \\
-		\end{matrix}\right.
+		\end{matrix}\right\}.
 
 ==========================================================
 System Equations and State Space representation:
@@ -96,18 +95,18 @@ Examples
 
 The folder railFE/examples contains several usage cases of the package:
 
-1. `Example 1 <examples/timoshenkoBeamElements_plotting.py>`_: Plotting the shape function for 4DOF Timoshenko elements without and with elastic bedding.
-2. `Example 2 <examples/TrackFrequencyResponseEvaluation.py>`_: Evaluation of the frequency response of the track (selected observed degrees of freedom) under a point load applied at a fixed location on the Finite Element model.  
-3. `Example 3 to do <examples/to_do>`_: Simulation of dynamic response of the system with gaussian track noise. 
-4. `Example 4 <examples/timeintegration_default_track_impulse.py>`_: Simulation of dynamic response when crossing a geometric irregularity on the rail (impulse like excitation and gaussian noise).
-5. `Example 5 <examples/timeintegration_varyingtrackparams_impulse.py>`_: Simulation of dynamic response when crossing a geometric irregularity on the rail with different track parameters and speeds  (impulse like excitation and gaussian noise).
-6. `Example 6 <examples/TimoshenkoBeam_AnalyticShapeFunctions.py>`_: Analytic solution of the timoshenko beam shape functions: TimoshenkoBeam_AnalyticShapeFunctions.py
+1. :ref:`Example 1 <shapefunctions>`: Plotting the shape function for 4DOF Timoshenko elements without and with elastic bedding.
+2. :ref:`Example 2 <track_freqresponse>`: Evaluation of the frequency response of the track (selected observed degrees of freedom) under a point load applied at a fixed location on the Finite Element model.  
+3. :ref:`Example 3 to do <examples:to_do>`: Simulation of dynamic response of the system with gaussian track noise. 
+4. :ref:`Example 4 <timeintegration_impulse>`: Simulation of dynamic response when crossing a geometric irregularity on the rail (impulse like excitation and gaussian noise).
+5. :ref:`Example 5 <timeintegration_varying>`: Simulation of dynamic response when crossing a geometric irregularity on the rail with different track parameters and speeds  (impulse like excitation and gaussian noise).
+6. :ref:`Example 6 <TimoshenkoBeam_AnalyticShapeFunctions.py>`: Analytic solution of the timoshenko beam shape functions: TimoshenkoBeam_AnalyticShapeFunctions.py
 
 ==========================================================
 Maintainers
 ==========================================================
 
-`@CyprienHoelzl <https://github.com/CyprienHoelzl/>`_.
+`@CyprienHoelzl <https://github.com/CyprienHoelzl/>`_
 
 ==========================================================
 Contributing
@@ -125,4 +124,4 @@ This project exists thanks to all the people who contribute.
 License
 ==========================================================
 
-`MIT <LICENSE>`_ © Cyprien Hoelzl
+`MIT <../../LICENSE>`_ © Cyprien Hoelzl

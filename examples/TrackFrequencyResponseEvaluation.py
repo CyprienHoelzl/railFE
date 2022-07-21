@@ -38,8 +38,8 @@ for i in range(mag.shape[1]):
     H_midspan_pt= P2R(mag_pt[0,i,:],phase_pt[0,i,:])
     H_support_pt= P2R(mag_pt[1,i,:],phase_pt[1,i,:])
     H_sleeper_pt= P2R(mag_pt[2,i,:],phase_pt[2,i,:])
-    ax[i].plot(w, abs(H_midspan_pt), label ='PT (point sleeper support), Rail midspan')
-    ax[i].plot(w, abs(H_midspan), label ='EB (distributed sleeper support), Rail midspan')
+    ax[i].plot(w, abs(H_midspan_pt), label ='PT (point sleeper support), \nRail midspan')
+    ax[i].plot(w, abs(H_midspan), label ='EB (distributed sleeper support), \nRail midspan')
     ax[i].plot(w, abs(H_support_pt), label ='PT, Rail support')
     ax[i].plot(w, abs(H_support), label ='EB, Rail support')
     ax[i].plot(w, abs(H_sleeper_pt), label ='PT, Sleeper')
@@ -59,7 +59,7 @@ ax[0].set_ylabel('Amplitude [m/N]', color='b')
 
 ax[0].legend()
 fig.tight_layout()
-fig.savefig('../figs/trackFrequencyResponseEvaluation/FrequencyResponse_point_distributed_support.pdf')
+fig.savefig('../figs/trackFrequencyResponseEvaluation/FrequencyResponse_point_distributed_support.png',dpi=300)
 
 #%% Calculate Frequency response for varying track parameters:
 output_fr = {}
@@ -246,6 +246,6 @@ for loading in [0,1]: # 0:midspan between sleepers, 1:over sleeper
     fig.align_ylabels()
     
     if loading==0:
-        fig.savefig('../figs/trackFrequencyResponseEvaluation/mode_shapes_load_midspan.pdf')
+        fig.savefig('../figs/trackFrequencyResponseEvaluation/mode_shapes_load_midspan.png',dpi=300)
     else:
-        fig.savefig('../figs/trackFrequencyResponseEvaluation/mode_shapes_load_oversleeper.pdf')
+        fig.savefig('../figs/trackFrequencyResponseEvaluation/mode_shapes_load_oversleeper.png',dpi=300)
