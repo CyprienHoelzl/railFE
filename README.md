@@ -1,6 +1,8 @@
 # railFE: Simplified Vehicle Track Interaction Model
 Dynamic simulation of a simplified rail vehicle rolling on a railway track. The track is modelled as a timoshenko rail beam on discrete sleeper supports. The rail vehicle is modelled as a quarter car model.
 
+For API documentation and full examples, please see the [documentation](https://railfe.readthedocs.io/).
+
 ## Table of Contents
 
 - [Background](#background)
