@@ -87,6 +87,10 @@ Feel free to dive in! [Open an issue](https://github.com/CyprienHoelzl/railFE/is
 This project exists thanks to all the people who contribute. 
 <a href="https://github.com/CyprienHoelzl/railFE/graphs/contributors"><img src="https://opencollective.com/railFE/contributors.svg?width=890&button=false" /></a>
 
+## Relation to railfe2
+
+This repository contains the original implementation, which served as a basis for the later **railfe2** project developed by Petr Voltr and collaborators. The work in `railfe2` builds upon and extends the modelling approach introduced here, adding further features and research-oriented developments. For the extended version, see: [railfe2 by Petr Voltr](https://github.com/Petr-Voltr/railfe2)
+
 ## License
 
 [MIT](LICENSE) © Cyprien Hoelzl
